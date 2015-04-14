@@ -1,3 +1,4 @@
+var fs = require('fs');
 var xml2js = require('xml2js');
 var phantom = require('phantom');
 
@@ -16,9 +17,29 @@ function snapShotPolygon(serialNumber, points) {
     });
 };
 
-snapShotPolygon('AR 12345', [
-    { x: 38.8941386, y: -77.0236192 },
-    { x: 38.8761386, y: -77.0236192 },
-    { x: 38.8761386, y: -77.0288192 },
-    { x: 38.8941386, y: -77.0288192 },
-]);
+function mapRawPointsToObjectArray(rawPointsString) {
+    return rawPointsString.split(' ').map(function(token) {
+        var splitTokens = token.split(',');
+        return {
+            x: parseFloat(splitTokens[1]),
+            y: parseFloat(splitTokens[0])
+        };
+    });
+}
+
+//snapShotPolygon('AR 12345', [
+//    { x: 38.8941386, y: -77.0236192 },
+//    { x: 38.8761386, y: -77.0236192 },
+//    { x: 38.8761386, y: -77.0288192 },
+//    { x: 38.8941386, y: -77.0288192 },
+//]);
+
+var fileContents = fs.readFileSync('example.kml', { encoding: 'utf8' });
+xml2js.parseString(fileContents, { trim: true }, function(err, result) {
+    result.kml.Document[0].Folder[0].Placemark.forEach(function(placemark) {
+        var serialNumber = placemark.name[0];
+        var rawPointsString = placemark.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
+        var points = mapRawPointsToObjectArray(rawPointsString);
+        snapShotPolygon(serialNumber, points);
+    });
+});
