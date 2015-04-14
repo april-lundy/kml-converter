@@ -30,7 +30,11 @@
         var leafletPolygon = points.map(function(point) {
             return [point.x, point.y];
         });
-        L.polygon(leafletPolygon).addTo(map);
+
+        var polygon = L.polygon(leafletPolygon);
+        polygon.fill = true;
+        polygon.fillColor = 'red';
+        polygon.addTo(map);
 
         // now fit to the points
         map.fitBounds(leafletPolygon, { maxZoom: 17 });
