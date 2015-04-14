@@ -1,17 +1,25 @@
-var page = require('webpage').create();
+var xml2js = require('xml2js');
+var phantom = require('phantom');
 
-page.onError = function(msg, trace) {
-    console.log(msg);
-    console.log(trace);
-};
-page.onResourceError = function(resourceError) {
-    console.log(resourceError.errorString);
-    console.log(resourceError.url);
+function snapShotPolygon(serialNumber, points) {
+    phantom.create('--ssl-protocol=any', function(phantomHandle) {
+        phantomHandle.createPage(function(page) {
+            var url = 'http://localhost:1337#' + JSON.stringify(points);
+            url = 'http://localhost:1337';
+            page.open(url, function(status) {
+                setTimeout(function() {
+                    console.log('Rendering ' + serialNumber);
+                    page.render(serialNumber + '.png');
+                    phantomHandle.exit();
+                }, 500);
+            });
+        });
+    });
 };
 
-page.open('http://localhost:1337', function(status) {
-    setTimeout(function() {
-        page.render('github.png');
-        phantom.exit();
-    }, 1000);
-});
+snapShotPolygon('AR 12345', [
+    { x: 38.8941386, y: -77.0236192 },
+    { x: 38.8941396, y: -77.0236192 },
+    { x: 38.8941396, y: -77.0236192 },
+    { x: 38.8941386, y: -77.0236192 },
+]);

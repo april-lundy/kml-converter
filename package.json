@@ -1,5 +1,6 @@
 {
-  "devDependencies": {
-    "phantomjs": "^1.9.16"
+  "dependencies": {
+    "phantom": "^0.7.2",
+    "xml2js": "^0.4.6"
   }
 }
