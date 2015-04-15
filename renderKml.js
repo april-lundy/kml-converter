@@ -27,14 +27,7 @@ function mapRawPointsToObjectArray(rawPointsString) {
     });
 }
 
-//snapShotPolygon('AR 12345', [
-//    { x: 38.8941386, y: -77.0236192 },
-//    { x: 38.8761386, y: -77.0236192 },
-//    { x: 38.8761386, y: -77.0288192 },
-//    { x: 38.8941386, y: -77.0288192 },
-//]);
-
-var fileContents = fs.readFileSync('example.kml', { encoding: 'utf8' });
+var fileContents = fs.readFileSync('example_small.kml', { encoding: 'utf8' });
 xml2js.parseString(fileContents, { trim: true }, function(err, result) {
     result.kml.Document[0].Folder[0].Placemark.forEach(function(placemark) {
         var serialNumber = placemark.name[0];
