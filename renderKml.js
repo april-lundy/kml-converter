@@ -9,6 +9,9 @@ function snapShotPolygon(serialNumber, points, complete) {
             var url = 'http://localhost:1337#' + JSON.stringify(points);
             page.open(url, function(status) {
                 setTimeout(function() {
+                    page.evaluate(function() {
+                        document.querySelector('.leaflet-control-attribution').style.visibility = 'hidden';
+                    });
                     console.log('Rendering ' + serialNumber);
                     page.render(serialNumber + '.png');
                     phantomHandle.exit();
