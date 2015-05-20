@@ -42,7 +42,7 @@
         map.fitBounds(leafletPolygon, { maxZoom: 17 });
 
         // Remove the attribution
-        document.querySelector('.leaflet-control-attribution').remove();
+        document.getElementsByClassName('leaflet-control-attribution')[0].remove();
         </script>
     </body>
 </html>
