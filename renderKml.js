@@ -29,7 +29,7 @@ function mapRawPointsToObjectArray(rawPointsString) {
     });
 }
 
-var fileContents = fs.readFileSync('example_small.kml', { encoding: 'utf8' });
+var fileContents = fs.readFileSync('example_smallest.kml', { encoding: 'utf8' });
 xml2js.parseString(fileContents, { trim: true }, function(err, result) {
     var placeMarkProcessors = result.kml.Document[0].Folder[0].Placemark.map(function(placemark) {
         var serialNumber = placemark.name[0];
