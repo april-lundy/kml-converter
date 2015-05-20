@@ -41,7 +41,8 @@
         // now fit to the points
         map.fitBounds(leafletPolygon, { maxZoom: 17 });
 
-
+        // Remove the attribution
+        document.querySelector('.leaflet-control-attribution').remove();
         </script>
     </body>
 </html>
