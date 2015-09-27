@@ -12,10 +12,11 @@ function snapShotPolygons(serialNumber, polygons, complete) {
           page.evaluate(function() {
             document.querySelector('.leaflet-control-attribution').style.visibility = 'hidden';
           });
-          console.log('Rendering ' + serialNumber);
+          console.log('  Rendering');
           page.render(serialNumber + '.png');
           phantomHandle.exit();
           complete && complete();
+          console.log('  Done.');
         }, 500);
       });
     });
@@ -40,5 +41,6 @@ xml2js.parseString(fileContents, { trim: true }, function(err, result) {
     return mapRawPointsToObjectArray(rawPointsString);
   });
 
+  console.log('About to load',basename(filename, '.kml'));
   snapShotPolygons(basename(filename, '.kml'), polygons);
 });
