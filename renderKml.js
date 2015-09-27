@@ -34,6 +34,14 @@ function mapRawPointsToObjectArray(rawPointsString) {
   });
 }
 
+function tmeToOpacity(tme) {
+  if(isNaN(Number(tme))) {
+    return 0.5;
+  }
+
+  return (4 - Number(tme)) / 4;
+}
+
 var filename = process.argv[2];
 var fileContents = fs.readFileSync(filename, { encoding: 'utf8' });
 xml2js.parseString(fileContents, { trim: true }, function(err, result) {
@@ -41,7 +49,7 @@ xml2js.parseString(fileContents, { trim: true }, function(err, result) {
     var rawPointsString = placemark.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
     return {
       points: mapRawPointsToObjectArray(rawPointsString),
-      opacity: 0.25,
+      opacity: tmeToOpacity(placemark.Name);
     };
   });
 
