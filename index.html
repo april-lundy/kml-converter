@@ -30,15 +30,19 @@
 
         // map the points to the format that leaflet wants, and add to the map
         var pointToLeafletPoint = function(point) { return [Number(point.x), Number(point.y)]; };
-        var polygonToLeafletPolygon = function(polygon) { return polygon.map(pointToLeafletPoint); };
+        var polygonToLeafletPolygon = function(polygon) {
+          return {
+            opacity: polygon.opacity,
+            points: polygon.map(pointToLeafletPoint),
+          };
+        };
         polygons.map(polygonToLeafletPolygon).forEach(function(leafletPolygon) {
-          var polygon = L.polygon(leafletPolygon, {
+          var polygon = L.polygon(leafletPolygon.points, {
             weight: 2,
             fill: true,
             fillColor: 'white',
+            fillOpacity: leafletPolygon.opacity
           });
-          polygon.fill = true;
-          polygon.fillColor = 'red';
           polygon.addTo(map);
         });
 
