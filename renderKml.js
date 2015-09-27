@@ -3,10 +3,11 @@ var async = require('async');
 var xml2js = require('xml2js');
 var phantom = require('phantom');
 
-function snapShotPolygon(serialNumber, points, complete) {
+function snapShotPolygons(serialNumber, polygons, complete) {
   phantom.create('--ssl-protocol=any', function(phantomHandle) {
     phantomHandle.createPage(function(page) {
-      var url = 'http://localhost:1337#' + JSON.stringify(points);
+      var url = 'http://localhost:1337#' + JSON.stringify(polygons);
+      console.log(url);
       page.open(url, function(status) {
         setTimeout(function() {
           page.evaluate(function() {
@@ -34,14 +35,10 @@ function mapRawPointsToObjectArray(rawPointsString) {
 
 var fileContents = fs.readFileSync('example_smallest.kml', { encoding: 'utf8' });
 xml2js.parseString(fileContents, { trim: true }, function(err, result) {
-  var placeMarkProcessors = result.kml.Document[0].Folder[0].Placemark.map(function(placemark) {
-    var serialNumber = placemark.name[0];
+  var polygons = result.kml.Document[0].Folder[0].Placemark.map(function(placemark) {
     var rawPointsString = placemark.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
-    var points = mapRawPointsToObjectArray(rawPointsString);
-    return function(callback) {
-      snapShotPolygon(serialNumber, points, callback);
-    };
+    return mapRawPointsToObjectArray(rawPointsString);
   });
 
-  async.series(placeMarkProcessors);
+  snapShotPolygons('Polygon', polygons);
 });
