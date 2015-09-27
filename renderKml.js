@@ -41,6 +41,6 @@ xml2js.parseString(fileContents, { trim: true }, function(err, result) {
     return mapRawPointsToObjectArray(rawPointsString);
   });
 
-  console.log('About to load',basename(filename, '.kml'));
+  console.log('About to load', basename(filename, '.kml'));
   snapShotPolygons(basename(filename, '.kml'), polygons);
 });
