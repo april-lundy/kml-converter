@@ -41,7 +41,7 @@ xml2js.parseString(fileContents, { trim: true }, function(err, result) {
     var rawPointsString = placemark.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
     return {
       points: mapRawPointsToObjectArray(rawPointsString),
-      opacity: 1,
+      opacity: 0.25,
     };
   });
 
