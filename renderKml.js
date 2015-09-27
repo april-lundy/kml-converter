@@ -39,7 +39,7 @@ function tmeToOpacity(tme) {
     return 0.5;
   }
 
-  return (4 - Number(tme)) / 4;
+  return (5 - Number(tme)) / 4;
 }
 
 var filename = process.argv[2];
@@ -49,7 +49,7 @@ xml2js.parseString(fileContents, { trim: true }, function(err, result) {
     var rawPointsString = placemark.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
     return {
       points: mapRawPointsToObjectArray(rawPointsString),
-      opacity: tmeToOpacity(placemark.Name);
+      opacity: tmeToOpacity(placemark.Name),
     };
   });
 
