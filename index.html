@@ -14,7 +14,7 @@
         <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
         <script>
         // parse the hash to get points
-        var polygons = decodeURIComponent(window.location.hash).substring(1);
+        var polygons = decodeURIComponent(window.location.hash.substring(1));
         if(polygons.length < 2) {
             polygons = '[]';
         }
