@@ -7,7 +7,6 @@ function snapShotPolygons(serialNumber, polygons, complete) {
   phantom.create('--ssl-protocol=any', function(phantomHandle) {
     phantomHandle.createPage(function(page) {
       var url = 'http://localhost:1337#' + JSON.stringify(polygons);
-      console.log(url);
       page.open(url, function(status) {
         setTimeout(function() {
           page.evaluate(function() {
