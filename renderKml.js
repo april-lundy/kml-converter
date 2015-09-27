@@ -2,6 +2,8 @@ var fs = require('fs');
 var xml2js = require('xml2js');
 var phantom = require('phantom');
 
+console.log(process.argv);
+
 function snapShotPolygons(serialNumber, polygons, complete) {
   phantom.create('--ssl-protocol=any', function(phantomHandle) {
     phantomHandle.createPage(function(page) {
