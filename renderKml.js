@@ -27,7 +27,7 @@ function mapRawPointsToObjectArray(rawPointsString) {
     var splitTokens = token.split(',');
     return {
       x: parseFloat(splitTokens[1]),
-         y: parseFloat(splitTokens[0])
+      y: parseFloat(splitTokens[0])
     };
   });
 }
