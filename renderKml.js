@@ -1,8 +1,7 @@
 var fs = require('fs');
 var xml2js = require('xml2js');
 var phantom = require('phantom');
-
-console.log(process.argv);
+var basename = require('path').basename;
 
 function snapShotPolygons(serialNumber, polygons, complete) {
   phantom.create('--ssl-protocol=any', function(phantomHandle) {
@@ -33,12 +32,13 @@ function mapRawPointsToObjectArray(rawPointsString) {
   });
 }
 
-var fileContents = fs.readFileSync('example_smallest.kml', { encoding: 'utf8' });
+var filename = process.argv[2];
+var fileContents = fs.readFileSync(filename, { encoding: 'utf8' });
 xml2js.parseString(fileContents, { trim: true }, function(err, result) {
   var polygons = result.kml.Document[0].Folder[0].Placemark.map(function(placemark) {
     var rawPointsString = placemark.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
     return mapRawPointsToObjectArray(rawPointsString);
   });
 
-  snapShotPolygons('Polygon', polygons);
+  snapShotPolygons(basename(filename, '.kml'), polygons);
 });
