@@ -7,6 +7,7 @@ function snapShotPolygons(serialNumber, polygons, complete) {
   phantom.create('--ssl-protocol=any', function(phantomHandle) {
     phantomHandle.createPage(function(page) {
       var url = 'http://localhost:1337#' + JSON.stringify(polygons);
+      console.log(url.length);
       page.open(url, function(status) {
         setTimeout(function() {
           page.evaluate(function() {
@@ -38,7 +39,10 @@ var fileContents = fs.readFileSync(filename, { encoding: 'utf8' });
 xml2js.parseString(fileContents, { trim: true }, function(err, result) {
   var polygons = result.kml.Document[0].Folder[0].Placemark.map(function(placemark) {
     var rawPointsString = placemark.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
-    return mapRawPointsToObjectArray(rawPointsString);
+    return {
+      points: mapRawPointsToObjectArray(rawPointsString),
+      opacity: 1,
+    };
   });
 
   console.log('About to load', basename(filename, '.kml'));
