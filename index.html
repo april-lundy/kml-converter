@@ -31,7 +31,11 @@
         var pointToLeafletPoint = function(point) { return [Number(point.x), Number(point.y)]; };
         var polygonToLeafletPolygon = function(polygon) { return polygon.map(pointToLeafletPoint); };
         polygons.map(polygonToLeafletPolygon).forEach(function(leafletPolygon) {
-          var polygon = L.polygon(leafletPolygon);
+          var polygon = L.polygon(leafletPolygon, {
+            weight: 2,
+            fill: true,
+            fillColor: 'white',
+          });
           polygon.fill = true;
           polygon.fillColor = 'red';
           polygon.addTo(map);
