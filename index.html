@@ -14,33 +14,30 @@
         <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
         <script>
         // parse the hash to get points
-        var pointsAsJson = decodeURIComponent(window.location.hash).substring(1);
-        if(pointsAsJson.length < 2) {
-            pointsAsJson = '[ { "x" : 38.8941386, "y" : -77.0236192 } ]'
+        var polygons = decodeURIComponent(window.location.hash).substring(1);
+        if(polygons.length < 2) {
+            polygons = '[]';
         }
-        var points = JSON.parse(pointsAsJson);
+        polygons = JSON.parse(polygons);
 
         // Stub out a map
-        var map = L.map('map', { zoomControl: false }).setView([38.8941386,-77.0236192], 13);
+        var map = L.map('map', { zoomControl: false }).setView([39.83333333,-98.583333333], 3);
         L.tileLayer('http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png', {          
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
         // map the points to the format that leaflet wants, and add to the map
-        var leafletPolygon = points.map(function(point) {
-            return [point.x, point.y];
-        });
+        var pointToLeafletPoint = function(point) { return [point.x, point.y]; };
+        var polygonToLeafletPolygon = function(polygon) { return polygon.map(pointToLeafletPoint); };
+        polygons.map(polygonToLeafletPolygon).forEach(function(leafeletPolygon) {
         var polygon = L.polygon(leafletPolygon);
-        polygon.fill = true;
-        polygon.fillColor = 'red';
-        polygon.addTo(map);
+          polygon.fill = true;
+          polygon.fillColor = 'red';
+          polygon.addTo(map);
+        });
 
         // add a scale to show
         L.control.scale().addTo(map);
-
-        // now fit to the points
-        map.fitBounds(leafletPolygon, { maxZoom: 17 });
-
         </script>
     </body>
 </html>
