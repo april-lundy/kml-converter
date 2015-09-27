@@ -33,7 +33,7 @@
         var polygonToLeafletPolygon = function(polygon) {
           return {
             opacity: polygon.opacity,
-            points: polygon.map(pointToLeafletPoint),
+            points: polygon.points.map(pointToLeafletPoint),
           };
         };
         polygons.map(polygonToLeafletPolygon).forEach(function(leafletPolygon) {
