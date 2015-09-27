@@ -20,6 +20,7 @@
         if(polygons.length < 2) {
             polygons = '[]';
         }
+        // Format: [ [ { points: [ ... ], opacity: 0.2 }, ... ], ... ]
         polygons = JSON.parse(polygons);
 
         // Stub out a map
