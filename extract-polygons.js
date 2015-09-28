@@ -2,6 +2,13 @@ var fs = require('fs');
 var xml2js = require('xml2js');
 var basename = require('path').basename;
 
+/**
+ * Takes a raw point string (lon,lat lon,lat lon,lat ...) and splits into an array
+ * of x-y point objects
+ *
+ * @param rawPointsString The raw points as a string
+ * @return An array of objects
+ */
 function mapRawPointsToObjectArray(rawPointsString) {
   return rawPointsString.split(' ').map(function(token) {
     var splitTokens = token.split(',');
@@ -12,15 +19,28 @@ function mapRawPointsToObjectArray(rawPointsString) {
   });
 }
 
+/**
+ * Converts a tme to an opacity value
+ *
+ * @param tme The tme string
+ * @return float
+ */
 function tmeToOpacity(tme) {
   if(isNaN(Number(tme))) {
-    console.log('  BAD TME:', tme);
     return 0.5;
   }
 
   return (5 - Number(tme)) / 4;
 }
 
+/**
+ * Extracts an array of polygons from a given file, calling the passed callback when it's done
+ *
+ * @param filename The kml file to read from
+ * @param callback A function to call when it's finished
+ *
+ * @return void
+ */
 module.exports = function(filename, callback) {
   var fileContents = fs.readFileSync(filename, { encoding: 'utf8' });
   xml2js.parseString(fileContents, { trim: true }, function(err, result) {
