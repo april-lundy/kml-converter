@@ -16,13 +16,6 @@
         <script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0/esri-leaflet.js"></script>
         <script>
         var polygons = <%= JSON.stringify(polygons) %>;
-        // parse the hash to get points
-        var polygons = decodeURIComponent(window.location.hash.substring(1));
-        if(polygons.length < 2) {
-            polygons = '[]';
-        }
-        // Format: [ [ { points: [ ... ], opacity: 0.2 }, ... ], ... ]
-        polygons = JSON.parse(polygons);
 
         // Stub out a map
         var map = L.map('map', { zoomControl: false }).setView([38.03333333,-98.583333333], 4);
