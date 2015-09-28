@@ -1,3 +1,4 @@
+var fs = require('fs');
 var path = require('path');
 var extractPolygons = require('./extract-polygons');
 var templateFile = require('./template-file')
@@ -17,6 +18,9 @@ var snapShotPolygons = function(name, polygons) {
     }
     console.log(stdout);
     console.log(stderr);
+
+    // remove the templated file
+    fs.unlink(name + '.html');
   });
 };
 
