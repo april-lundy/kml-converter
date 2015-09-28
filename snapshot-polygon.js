@@ -11,12 +11,19 @@ var system = require('system');
  */
 page.viewportSize = { width: 1024, height: 720 };
 page.open('http://localhost:1337/' + system.args[1], function(status) {
+
+  // We're using setTimeout here to "sleep" a little bit, so that the page has time to render
   window.setTimeout(function() {
+
+    // Remove the attribution control
     page.evaluate(function() {
       document.querySelector('.leaflet-control-attribution').style.visibility = 'hidden';
     });
 
+    // save the image
     page.render(system.args[2]);
+
+    // tell phantom we're done
     phantom.exit();
   }, 500)
 });
