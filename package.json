@@ -1,8 +1,14 @@
 {
+  "scripts": {
+    "test": "node_modules/jshint/bin/jshint *.js"
+  },
   "dependencies": {
     "express": "^4.13.3",
     "lodash": "^3.10.1",
     "phantomjs": "1.9.*",
     "xml2js": "^0.4.6"
+  },
+  "devDependencies": {
+    "jshint": "^2.8.0"
   }
 }
