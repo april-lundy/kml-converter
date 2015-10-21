@@ -4,6 +4,7 @@
     "clean": "rm -f *.png"
   },
   "dependencies": {
+    "archiver": "^0.16.0",
     "async": "^1.4.2",
     "express": "^4.13.3",
     "glob": "^5.0.15",
