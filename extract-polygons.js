@@ -64,8 +64,6 @@ module.exports = function(filename, callback) {
       };
     });
 
-    if(callback) {
-      callback(polygons);
-    }
+    return callback(polygons);
   });
 };
