@@ -4,7 +4,9 @@
     "clean": "rm -f *.png"
   },
   "dependencies": {
+    "async": "^1.4.2",
     "express": "^4.13.3",
+    "glob": "^5.0.15",
     "lodash": "^3.10.1",
     "phantomjs": "1.9.*",
     "xml2js": "^0.4.6"
