@@ -1,6 +1,8 @@
+var async = require('async');
 var childProcess = require('child_process');
 var extractPolygons = require('./extract-polygons');
 var fs = require('fs');
+var glob = require('glob');
 var path = require('path');
 var phantom = require('phantomjs').path;
 var templateFile = require('./template-file');
@@ -31,15 +33,23 @@ var snapShotPolygons = function(name, polygons, callback) {
     fs.unlink(name + '.html');
 
     // Notify that were done
-    return callback(null, stdout, stderr);
+    console.log('  Done with ' + name);
+    return callback(null, 'Done with ' + name);
   });
 };
 
-// use the second arg (node renderKml.js FILENAME.kml) as the input file
-var filename = process.argv[2];
-extractPolygons(filename, function(polygons) {
-  console.log('About to load', path.basename(filename, '.kml'));
-  snapShotPolygons(path.basename(filename, '.kml'), polygons, function() {
-    console.log(arguments);
-  });
-});
+// use the second arg (node renderKml.js glob) to specify files
+var filenames = glob.sync(process.argv[2]);
+
+var polygonExtractor = function(filename) {
+  return function(callback) {
+    extractPolygons(filename, function(polygons) {
+      console.log('Loading', path.basename(filename, '.kml'));
+      snapShotPolygons(path.basename(filename, '.kml'), polygons, function(err, result) {
+        return callback(err, result);
+      });
+    });
+  };
+};
+
+async.series(filenames.map(polygonExtractor));
