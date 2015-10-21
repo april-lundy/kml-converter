@@ -1,9 +1,9 @@
+var childProcess = require('child_process');
+var extractPolygons = require('./extract-polygons');
 var fs = require('fs');
 var path = require('path');
-var extractPolygons = require('./extract-polygons');
-var templateFile = require('./template-file')
 var phantom = require('phantomjs').path;
-var childProcess = require('child_process');
+var templateFile = require('./template-file')
 
 var snapShotPolygons = function(name, polygons, callback) {
   // default the callback to always be a function (even if its a no-op)
