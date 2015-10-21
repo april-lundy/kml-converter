@@ -52,7 +52,7 @@ module.exports = function(filename, callback) {
     var placemarks = result.kml.Document[0].Folder[0].Placemark;
 
     // If there are no placemarks in the file, then there are no polygons
-    if(!placemarks instanceof Array) {
+    if(!(placemarks instanceof Array)) {
       return callback([]);
     }
 
