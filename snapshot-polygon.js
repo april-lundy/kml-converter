@@ -25,5 +25,5 @@ page.open('http://localhost:1337/' + system.args[1], function(status) {
 
     // tell phantom we're done
     phantom.exit();
-  }, 500)
+  }, 500);
 });

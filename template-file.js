@@ -15,4 +15,4 @@ module.exports = function(templateFile, outputFile, data) {
   var templateFunction = _.template(contents);
   var templated = templateFunction(data);
   fs.writeFileSync(outputFile, templated);
-}
+};
