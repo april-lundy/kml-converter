@@ -42,9 +42,21 @@ function tmeToOpacity(tme) {
  * @return void
  */
 module.exports = function(filename, callback) {
+  // enforce that the callback is a function
+  if(typeof callback != 'function') {
+    callback = function() { };
+  }
+
   var fileContents = fs.readFileSync(filename, { encoding: 'utf8' });
   xml2js.parseString(fileContents, { trim: true }, function(err, result) {
-    var polygons = result.kml.Document[0].Folder[0].Placemark.map(function(placemark) {
+    var placemarks = result.kml.Document[0].Folder[0].Placemark;
+
+    // If there are no placemarks in the file, then there are no polygons
+    if(!placemarks instanceof Array) {
+      return callback([]);
+    }
+
+    var polygons = placemarks.map(function(placemark) {
       var rawPointsString = placemark.Polygon[0].outerBoundaryIs[0].LinearRing[0].coordinates[0];
       return {
         points: mapRawPointsToObjectArray(rawPointsString),
