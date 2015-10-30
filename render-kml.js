@@ -63,7 +63,13 @@ var processFiles = function(files, callback) {
   async.series(files.map(polygonExtractor), callback);
 };
 
-// use the second arg (node renderKml.js glob) to specify files
-processFiles(glob.sync(process.argv[2]), function() {
-  console.log('Done!');
-});
+// if the file is not the main script, export the "doer" function for others to use, otherwise try to run it immediately
+// from: https://nodejs.org/docs/v4.2.1/api/modules.html (See Accessing the main module)
+if(require.main === module) {
+  // use the second arg (node renderKml.js glob) to specify files
+  processFiles(glob.sync(process.argv[2]), function() {
+    console.log('Done!');
+  });
+} else {
+  module.exports.processFiles = processFiles;
+}
