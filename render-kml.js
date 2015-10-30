@@ -61,7 +61,7 @@ var processFiles = function(files, callback) {
   }
 
   async.series(files.map(polygonExtractor), callback);
-}
+};
 
 // use the second arg (node renderKml.js glob) to specify files
 processFiles(glob.sync(process.argv[2]), function() {
