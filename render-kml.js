@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var async = require('async');
 var childProcess = require('child_process');
 var extractPolygons = require('./extract-polygons');
