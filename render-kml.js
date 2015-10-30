@@ -40,8 +40,6 @@ var snapShotPolygons = function(name, polygons, callback) {
   });
 };
 
-// use the second arg (node renderKml.js glob) to specify files
-var filenames = glob.sync(process.argv[2]);
 
 var polygonExtractor = function(filename) {
   return function(callback) {
@@ -54,4 +52,18 @@ var polygonExtractor = function(filename) {
   };
 };
 
-async.series(filenames.map(polygonExtractor));
+var processFiles = function(files, callback) {
+  callback = callback || function() { };
+
+  // make sure files is always an array
+  if(!(files instanceof Array)) {
+    files = [files];
+  }
+
+  async.series(files.map(polygonExtractor), callback);
+}
+
+// use the second arg (node renderKml.js glob) to specify files
+processFiles(glob.sync(process.argv[2]), function() {
+  console.log('Done!');
+});
