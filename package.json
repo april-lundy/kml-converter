@@ -1,4 +1,7 @@
 {
+  "name" : "render-kml",
+  "version": "0.1.0",
+  "main" : "render-kml.js",
   "scripts": {
     "test": "node_modules/jshint/bin/jshint *.js",
     "clean": "rm -f *.png"
